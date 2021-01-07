@@ -1,0 +1,28 @@
+<?php
+
+namespace ericchew87\WWEXPHP\Services;
+
+use \WsdlToPhp\PackageBase\AbstractSoapClientBase;
+
+/**
+ * Class WWEXService
+ * @package ericchew87\WWEXPHP\Services
+ */
+class WWEXService extends AbstractSoapClientBase
+{
+  public $version;
+
+  public function __construct(array $wsdlOptions = array(), $resetSoapClient = true, $mode = 'test') {
+    if ($mode === false) $mode = 'test';
+    if ($mode === true) $mode = 'live';
+    parent::__construct($wsdlOptions,$resetSoapClient);
+        if ($mode == 'live') $this->setLocation('https://app6.wwex.com:8080/s3fWebService/services/SpeedShip2Service');
+        if ($mode == 'test') $this->setLocation('https://uat.wwex.com:8080/s3fWebService/services/SpeedShip2Service');
+  }
+
+  public static function version() {
+    $service = new static;
+    return $service->version;
+  }
+
+}
